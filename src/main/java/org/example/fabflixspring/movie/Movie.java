@@ -1,17 +1,20 @@
 package org.example.fabflixspring.movie;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 
 public record Movie(
         @Id
-        @NotNull
+        @NotBlank
         String id,
-        @NotNull
+        @NotBlank
         String title,
-        @NotNull
+        @NotEmpty
         Integer year,
         @NotNull
-        String director
+        String director,
+        Rating rating
 ) {
 }
