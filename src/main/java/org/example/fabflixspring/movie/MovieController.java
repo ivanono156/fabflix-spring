@@ -17,7 +17,7 @@ public class MovieController {
         this.movieRepository = movieRepository;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Movie> findAll() {
         return movieRepository.findAll();
     }
