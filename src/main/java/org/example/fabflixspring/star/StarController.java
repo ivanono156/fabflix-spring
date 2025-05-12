@@ -1,9 +1,8 @@
 package org.example.fabflixspring.star;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,19 +10,24 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/stars")
 public class StarController {
-    private final StarRepository starRepository;
+    private final StarService starService;
 
-    public StarController(StarRepository starRepository) {
-        this.starRepository = starRepository;
+    public StarController(StarService starRepository) {
+        this.starService = starRepository;
     }
 
     @GetMapping
-    public List<Star> findAll() {
-        return starRepository.findAll();
+    public List<Star> getAllStars() {
+        return starService.getAllStars();
     }
 
     @GetMapping("/{id}")
-    public Optional<Star> findById(@PathVariable String id) {
-        return starRepository.findById(id);
+    public Optional<Star> getStarById(@PathVariable String id) {
+        return starService.getStarById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<Star> addStar(@RequestBody Star star) {
+        return new ResponseEntity<>(starService.addStar(star), HttpStatus.CREATED);
     }
 }

@@ -1,9 +1,8 @@
 package org.example.fabflixspring.movie;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,19 +10,29 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/movies")
 public class MovieController {
-    private final MovieRepository movieRepository;
+    private final MovieService movieService;
 
-    public MovieController(MovieRepository movieRepository) {
-        this.movieRepository = movieRepository;
+    public MovieController(MovieService movieService) {
+        this.movieService = movieService;
     }
 
     @GetMapping
-    public List<Movie> findAll() {
-        return movieRepository.findAll();
+    public List<Movie> getAllMovies() {
+        return movieService.getAllMovies();
     }
 
     @GetMapping("/{id}")
-    public Optional<Movie> findById(@PathVariable String id) {
-        return movieRepository.findById(id);
+    public Optional<Movie> getMovieById(@PathVariable String id) {
+        return movieService.getMovieById(id);
+    }
+
+    @PostMapping
+    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
+        return new ResponseEntity<>(movieService.addMovie(movie), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/{movieId}/stars")
+    public ResponseEntity<Movie> addStarsToMovie(@PathVariable String movieId, @RequestBody List<String> starIds) {
+        return new ResponseEntity<>(movieService.addStarsToMovie(movieId, starIds), HttpStatus.CREATED);
     }
 }
