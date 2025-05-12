@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
@@ -53,8 +54,8 @@ public class MovieService {
                 movie.getDirector(),
                 rating != null ? rating.getRating() : 0.0,
                 rating != null ? rating.getNumVotes() : 0,
-                movie.getStars().stream().map(Star::getName).toList(),
-                movie.getGenres().stream().map(Genre::getName).toList()
+                movie.getStars().stream().collect(Collectors.toMap(Star::getId, Star::getName)),
+                movie.getGenres().stream().collect(Collectors.toMap(Genre::getId, Genre::getName))
         );
     }
 }

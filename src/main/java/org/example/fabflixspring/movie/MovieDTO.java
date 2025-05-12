@@ -1,6 +1,6 @@
 package org.example.fabflixspring.movie;
 
-import java.util.List;
+import java.util.Map;
 
 public class MovieDTO {
     private String id;
@@ -9,21 +9,21 @@ public class MovieDTO {
     private String director;
     private Double rating;
     private Integer numVotes;
-    private List<String> starNames;
-    private List<String> genreNames;
+    private Map<String, String> stars;
+    private Map<Integer, String> genres;
 
     public MovieDTO() {}
 
     public MovieDTO(String id, String title, Integer year, String director,
-                    Double rating, Integer numVotes, List<String> starNames, List<String> genreNames) {
+                    Double rating, Integer numVotes, Map<String, String> stars, Map<Integer, String> genres) {
         this.id = id;
         this.title = title;
         this.year = year;
         this.director = director;
         this.rating = rating;
         this.numVotes = numVotes;
-        this.starNames = starNames;
-        this.genreNames = genreNames;
+        this.stars = stars;
+        this.genres = genres;
     }
 
     public String getId() {
@@ -74,19 +74,19 @@ public class MovieDTO {
         this.numVotes = numVotes;
     }
 
-    public List<String> getStarNames() {
-        return starNames;
+    public Map<String, String> getStars() {
+        return stars;
     }
 
-    public void setStarNames(List<String> starNames) {
-        this.starNames = starNames;
+    public void setStars(Map<String, String> stars) {
+        this.stars = stars;
     }
 
-    public List<String> getGenreNames() {
-        return genreNames;
+    public Map<Integer, String> getGenres() {
+        return genres;
     }
 
-    public void setGenreNames(List<String> genreNames) {
-        this.genreNames = genreNames;
+    public void setGenres(Map<Integer, String> genres) {
+        this.genres = genres;
     }
 }
