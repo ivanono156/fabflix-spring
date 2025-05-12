@@ -32,6 +32,14 @@ public class Movie {
     )
     private List<Star> stars;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "genres_in_movies",
+        joinColumns = @JoinColumn(name = "movie_id"),
+        inverseJoinColumns = @JoinColumn(name = "genre_id")
+    )
+    private List<Genre> genres;
+
     public String getId() {
         return id;
     }
@@ -78,5 +86,13 @@ public class Movie {
 
     public void setRating(Rating rating) {
         this.rating = rating;
+    }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
     }
 }
