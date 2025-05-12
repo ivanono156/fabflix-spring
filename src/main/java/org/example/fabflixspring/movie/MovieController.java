@@ -17,13 +17,18 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<Movie> getAllMovies() {
-        return movieService.getAllMovies();
+    public List<MovieDTO> getAllMovies() {
+        return movieService.getAllMovies().stream()
+                .map(MovieService::convertToMovieDTO)
+                .toList();
     }
 
     @GetMapping("/{id}")
-    public Optional<Movie> getMovieById(@PathVariable String id) {
-        return movieService.getMovieById(id);
+    public ResponseEntity<MovieDTO> getMovieById(@PathVariable String id) {
+        Optional<Movie> movie = movieService.getMovieById(id);
+        return movie.map(
+                value -> new ResponseEntity<>(MovieService.convertToMovieDTO(value), HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping

@@ -35,4 +35,18 @@ public class MovieService {
         movie.getStars().addAll(stars);
         return movieRepository.save(movie);
     }
+
+    public static MovieDTO convertToMovieDTO(Movie movie) {
+        Rating rating = movie.getRating();
+        return new MovieDTO(
+                movie.getId(),
+                movie.getTitle(),
+                movie.getYear(),
+                movie.getDirector(),
+                rating != null ? rating.getRating() : 0.0,
+                rating != null ? rating.getNumVotes() : 0,
+                movie.getStars().stream().map(Star::getName).toList(),
+                movie.getGenres().stream().map(Genre::getName).toList()
+        );
+    }
 }

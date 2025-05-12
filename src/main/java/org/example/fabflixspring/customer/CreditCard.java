@@ -19,7 +19,7 @@ public class CreditCard {
     private String lastName;
 
     @Column(nullable = false)
-    private Date expirationDate;
+    private Date expiration;
 
     @OneToMany(mappedBy = "creditCard", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Customer> customers;
@@ -48,12 +48,12 @@ public class CreditCard {
         this.lastName = lastName;
     }
 
-    public Date getExpirationDate() {
-        return expirationDate;
+    public Date getExpiration() {
+        return expiration;
     }
 
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setExpiration(Date expiration) {
+        this.expiration = expiration;
     }
 
     public List<Customer> getCustomers() {
