@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,16 +25,16 @@ public class MovieService {
         Page<Movie> moviePage = movieRepository.findAll(pageable);
 
         return moviePage.getContent().stream()
-                .map(MovieService::convertToMovieDTO)
+                .map(MovieService::convertToDTO)
                 .toList();
     }
 
-    public Optional<Movie> getMovieById(String id) {
-        return movieRepository.findById(id);
+    public MovieDTO getMovieById(String id) {
+        return convertToDTO(movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id)));
     }
 
-    public Movie addMovie(Movie movie) {
-        return movieRepository.save(movie);
+    public MovieDTO addMovie(Movie movie) {
+        return convertToDTO(movieRepository.save(movie));
     }
 
     public Movie addStarsToMovie(String movieId, List<String> starIds) {
@@ -45,7 +44,7 @@ public class MovieService {
         return movieRepository.save(movie);
     }
 
-    public static MovieDTO convertToMovieDTO(Movie movie) {
+    public static MovieDTO convertToDTO(Movie movie) {
         Rating rating = movie.getRating();
         return new MovieDTO(
                 movie.getId(),

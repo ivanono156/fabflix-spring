@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/stars")
@@ -17,17 +16,20 @@ public class StarController {
     }
 
     @GetMapping
-    public List<Star> getAllStars() {
-        return starService.getAllStars();
+    public ResponseEntity<List<StarDTO>> getAllStars(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size
+    ) {
+        return new ResponseEntity<>(starService.getAllStars(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public Optional<Star> getStarById(@PathVariable String id) {
-        return starService.getStarById(id);
+    public ResponseEntity<StarDTO> getStarById(@PathVariable String id) {
+        return new ResponseEntity<>(starService.getStarById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Star> addStar(@RequestBody Star star) {
+    public ResponseEntity<StarDTO> addStar(@RequestBody Star star) {
         return new ResponseEntity<>(starService.addStar(star), HttpStatus.CREATED);
     }
 }

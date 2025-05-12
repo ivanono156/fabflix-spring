@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/movies")
@@ -26,14 +25,11 @@ public class MovieController {
 
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable String id) {
-        Optional<Movie> movie = movieService.getMovieById(id);
-        return movie.map(
-                value -> new ResponseEntity<>(MovieService.convertToMovieDTO(value), HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return new ResponseEntity<>(movieService.getMovieById(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
+    public ResponseEntity<MovieDTO> addMovie(@RequestBody Movie movie) {
         return new ResponseEntity<>(movieService.addMovie(movie), HttpStatus.CREATED);
     }
 
