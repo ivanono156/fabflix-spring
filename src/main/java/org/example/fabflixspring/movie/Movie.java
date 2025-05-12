@@ -1,6 +1,7 @@
 package org.example.fabflixspring.movie;
 
 import jakarta.persistence.*;
+import org.example.fabflixspring.customer.Sale;
 import org.example.fabflixspring.star.Star;
 
 import java.util.List;
@@ -21,10 +22,10 @@ public class Movie {
     @Column(length = 100, nullable = false)
     private String director;
 
-    @OneToOne(mappedBy = "movie")
+    @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL)
     private Rating rating;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
         name = "stars_in_movies",
         joinColumns = @JoinColumn(name = "movie_id"),
@@ -32,13 +33,16 @@ public class Movie {
     )
     private List<Star> stars;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany
     @JoinTable(
         name = "genres_in_movies",
         joinColumns = @JoinColumn(name = "movie_id"),
         inverseJoinColumns = @JoinColumn(name = "genre_id")
     )
     private List<Genre> genres;
+
+    @OneToMany(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Sale> sales;
 
     public String getId() {
         return id;
@@ -72,14 +76,6 @@ public class Movie {
         this.director = director;
     }
 
-    public List<Star> getStars() {
-        return stars;
-    }
-
-    public void setStars(List<Star> stars) {
-        this.stars = stars;
-    }
-
     public Rating getRating() {
         return rating;
     }
@@ -88,11 +84,27 @@ public class Movie {
         this.rating = rating;
     }
 
+    public List<Star> getStars() {
+        return stars;
+    }
+
+    public void setStars(List<Star> stars) {
+        this.stars = stars;
+    }
+
     public List<Genre> getGenres() {
         return genres;
     }
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+    public List<Sale> getSales() {
+        return sales;
+    }
+
+    public void setSales(List<Sale> sales) {
+        this.sales = sales;
     }
 }
