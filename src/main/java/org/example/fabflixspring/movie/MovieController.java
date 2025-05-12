@@ -17,10 +17,11 @@ public class MovieController {
     }
 
     @GetMapping
-    public List<MovieDTO> getAllMovies() {
-        return movieService.getAllMovies().stream()
-                .map(MovieService::convertToMovieDTO)
-                .toList();
+    public ResponseEntity<List<MovieDTO>> getAllMovies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size
+    ) {
+        return new ResponseEntity<>(movieService.getAllMovies(page, size), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
