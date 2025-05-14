@@ -33,8 +33,12 @@ public class MovieController {
         return new ResponseEntity<>(movieService.addMovie(movie), HttpStatus.CREATED);
     }
 
-    @PostMapping("/{movieId}/stars")
-    public ResponseEntity<Movie> addStarsToMovie(@PathVariable String movieId, @RequestBody List<String> starIds) {
-        return new ResponseEntity<>(movieService.addStarsToMovie(movieId, starIds), HttpStatus.CREATED);
+    @GetMapping("/genre/{genreId}")
+    public ResponseEntity<List<MovieDTO>> getAllMoviesOfGenre(
+            @PathVariable Integer genreId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size
+    ) {
+        return new ResponseEntity<>(movieService.getAllMoviesOfGenre(page, size, genreId), HttpStatus.OK);
     }
 }

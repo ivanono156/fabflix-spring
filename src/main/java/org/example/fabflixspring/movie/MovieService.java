@@ -23,7 +23,6 @@ public class MovieService {
     public List<MovieDTO> getAllMovies(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Movie> moviePage = movieRepository.findAll(pageable);
-
         return moviePage.getContent().stream()
                 .map(MovieService::convertToDTO)
                 .toList();
@@ -33,15 +32,17 @@ public class MovieService {
         return convertToDTO(movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id)));
     }
 
-    public MovieDTO addMovie(Movie movie) {
-        return convertToDTO(movieRepository.save(movie));
+    public List<MovieDTO> getAllMoviesOfGenre(int page, int size, Integer genreId) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = movieRepository.findByGenreId(genreId, pageable);
+        return moviePage.getContent().stream()
+                .map(MovieService::convertToDTO)
+                .toList();
     }
 
-    public Movie addStarsToMovie(String movieId, List<String> starIds) {
-        Movie movie = movieRepository.findById(movieId).orElseThrow(() -> new MovieNotFoundException(movieId));
-        List<Star> stars = starRepository.findAllById(starIds);
-        movie.getStars().addAll(stars);
-        return movieRepository.save(movie);
+
+    public MovieDTO addMovie(Movie movie) {
+        return convertToDTO(movieRepository.save(movie));
     }
 
     public static MovieDTO convertToDTO(Movie movie) {

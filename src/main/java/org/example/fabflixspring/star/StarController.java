@@ -28,8 +28,8 @@ public class StarController {
         return new ResponseEntity<>(starService.getStarById(id), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<StarDTO> addStar(@RequestBody Star star) {
-        return new ResponseEntity<>(starService.addStar(star), HttpStatus.CREATED);
-    }
+//    @PostMapping("/add")
+//    public ResponseEntity<StarDTO> addStar(@RequestBody Star star) {
+//        return new ResponseEntity<>(starService.addStar(star), HttpStatus.CREATED);
+//    }
 }
