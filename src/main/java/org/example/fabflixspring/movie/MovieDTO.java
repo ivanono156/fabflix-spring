@@ -1,6 +1,6 @@
 package org.example.fabflixspring.movie;
 
-import java.util.Map;
+import java.util.List;
 
 public class MovieDTO {
     private String id;
@@ -9,13 +9,13 @@ public class MovieDTO {
     private String director;
     private Double rating;
     private Integer numVotes;
-    private Map<String, String> stars;
-    private Map<Integer, String> genres;
+    private List<StarDTO> stars;
+    private List<GenreDTO> genres;
 
     public MovieDTO() {}
 
     public MovieDTO(String id, String title, Integer year, String director,
-                    Double rating, Integer numVotes, Map<String, String> stars, Map<Integer, String> genres) {
+                    Double rating, Integer numVotes, List<StarDTO> stars, List<GenreDTO> genres) {
         this.id = id;
         this.title = title;
         this.year = year;
@@ -74,19 +74,19 @@ public class MovieDTO {
         this.numVotes = numVotes;
     }
 
-    public Map<String, String> getStars() {
+    public List<StarDTO> getStars() {
         return stars;
     }
 
-    public void setStars(Map<String, String> stars) {
+    public void setStars(List<StarDTO> stars) {
         this.stars = stars;
     }
 
-    public Map<Integer, String> getGenres() {
+    public List<GenreDTO> getGenres() {
         return genres;
     }
 
-    public void setGenres(Map<Integer, String> genres) {
+    public void setGenres(List<GenreDTO> genres) {
         this.genres = genres;
     }
 }

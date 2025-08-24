@@ -1,23 +1,18 @@
 package org.example.fabflixspring.movie;
 
-import org.example.fabflixspring.star.Star;
-import org.example.fabflixspring.star.StarRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MovieService {
     private final MovieRepository movieRepository;
-    private final StarRepository starRepository;
 
-    MovieService(MovieRepository movieRepository, StarRepository starRepository) {
+    MovieService(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
-        this.starRepository = starRepository;
     }
 
     public List<MovieDTO> getAllMovies(int page, int size) {
@@ -54,8 +49,8 @@ public class MovieService {
                 movie.getDirector(),
                 rating != null ? rating.getRating() : 0.0,
                 rating != null ? rating.getNumVotes() : 0,
-                movie.getStars().stream().collect(Collectors.toMap(Star::getId, Star::getName)),
-                movie.getGenres().stream().collect(Collectors.toMap(Genre::getId, Genre::getName))
+                movie.getStars().stream().map(star -> new StarDTO(star.getId(), star.getName(), star.getBirthYear())).toList(),
+                movie.getGenres().stream().map(genre -> new GenreDTO(genre.getId(), genre.getName())).toList()
         );
     }
 }

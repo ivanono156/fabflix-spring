@@ -33,7 +33,7 @@ public class MovieController {
         return new ResponseEntity<>(movieService.addMovie(movie), HttpStatus.CREATED);
     }
 
-    @GetMapping("/genre/{genreId}")
+    @GetMapping("/genres/{genreId}")
     public ResponseEntity<List<MovieDTO>> getAllMoviesOfGenre(
             @PathVariable Integer genreId,
             @RequestParam(defaultValue = "0") int page,
