@@ -1,17 +1,17 @@
 package org.example.fabflixspring.star;
 
-import java.util.Map;
+import java.util.List;
 
 public class StarDTO {
     private String id;
     private String name;
     private Integer birthYear;
-    private Map<String, String> movies;
+    private List<MovieDTO> movies;
 
     public StarDTO() {
     }
 
-    public StarDTO(String id, String name, Integer birthYear, Map<String, String> movies) {
+    public StarDTO(String id, String name, Integer birthYear, List<MovieDTO> movies) {
         this.id = id;
         this.name = name;
         this.birthYear = birthYear;
@@ -42,11 +42,11 @@ public class StarDTO {
         this.birthYear = birthYear;
     }
 
-    public Map<String, String> getMovies() {
+    public List<MovieDTO> getMovies() {
         return movies;
     }
 
-    public void setMovies(Map<String, String> movies) {
+    public void setMovies(List<MovieDTO> movies) {
         this.movies = movies;
     }
 }

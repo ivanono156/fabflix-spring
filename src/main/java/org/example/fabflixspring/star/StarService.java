@@ -1,6 +1,5 @@
 package org.example.fabflixspring.star;
 
-import org.example.fabflixspring.movie.Movie;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,7 +39,7 @@ public class StarService {
                 star.getId(),
                 star.getName(),
                 star.getBirthYear(),
-                star.getMovies().stream().collect(Collectors.toMap(Movie::getId, Movie::getTitle))
+                star.getMovies().stream().map(movie -> new MovieDTO(movie.getId(), movie.getTitle(), movie.getYear(), movie.getDirector())).toList()
         );
     }
 }
