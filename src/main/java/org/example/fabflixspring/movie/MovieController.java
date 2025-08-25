@@ -23,6 +23,14 @@ public class MovieController {
         return new ResponseEntity<>(movieService.getAllMovies(page, size), HttpStatus.OK);
     }
 
+    @GetMapping("/rating-desc")
+    public ResponseEntity<List<MovieDTO>> getTopRatedMovies(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size
+    ) {
+        return new ResponseEntity<>(movieService.getTopRatedMovies(page, size), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MovieDTO> getMovieById(@PathVariable String id) {
         return new ResponseEntity<>(movieService.getMovieById(id), HttpStatus.OK);

@@ -23,6 +23,14 @@ public class MovieService {
                 .toList();
     }
 
+    public List<MovieDTO> getTopRatedMovies(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> moviePage = movieRepository.findAllByOrderByRatingRatingDesc(pageable);
+        return moviePage.getContent().stream()
+                .map(MovieService::convertToDTO)
+                .toList();
+    }
+
     public MovieDTO getMovieById(String id) {
         return convertToDTO(movieRepository.findById(id).orElseThrow(() -> new MovieNotFoundException(id)));
     }
